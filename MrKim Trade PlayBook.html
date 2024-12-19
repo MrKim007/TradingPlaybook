@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MrKim Trading Playbook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1e;
+            color: #e5e5e5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #2c2c2e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: turquoise;
+        }
+        .progress-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .progress-bar {
+            width: 100%;
+            background: #3a3a3c;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar div {
+            height: 20px;
+            background: #4caf50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .checkbox {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+        .checkbox.checked::after {
+            content: "";
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 12px;
+            height: 12px;
+            background: #4caf50;
+            border-radius: 2px;
+        }
+        button {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: #007aff;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.8em;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+        button:hover {
+            background: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MrKim Trading Playbook</h1>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div></div>
+            </div>
+            <p id="progress-text">0% Complete</p>
+        </div>
+        <ul id="checklist">
+            <li>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <span>Crossed EMA</span>
+            </li>
+            <li>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <span>Volume Above EMA</span>
+            </li>
+            <li>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <span>RSI</span>
+            </li>
+            <li>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <span>ADX Above 10</span>
+            </li>
+            <li>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <span>Choppiness Under 50</span>
+            </li>
+        </ul>
+        <button onclick="addCondition()">Add New Condition</button>
+    </div>
+
+    <script>
+        function toggleCheckbox(checkbox) {
+            checkbox.classList.toggle('checked');
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const checked = document.querySelectorAll('.checkbox.checked').length;
+            const total = checkboxes.length;
+            const percentage = Math.round((checked / total) * 100);
+            document.querySelector('.progress-bar div').style.width = `${percentage}%`;
+            document.getElementById('progress-text').innerText = `${percentage}% Complete`;
+        }
+
+        function addCondition() {
+            const list = document.getElementById('checklist');
+            const newCondition = document.createElement('li');
+
+            newCondition.innerHTML = `
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                <span>New Condition</span>
+            `;
+
+            list.appendChild(newCondition);
+            updateProgress();
+        }
+    </script>
+</body>
+</html>
